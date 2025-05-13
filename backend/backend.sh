@@ -1,47 +1,34 @@
+
 #!/bin/bash
+# Run this on your BACKEND EC2 (Private)
 
-echo "📦 Updating system and installing dependencies..."
+# Install Node.js and npm
 sudo apt update -y
-sudo apt install -y nodejs npm
+sudo apt install nodejs npm -y
 
-echo "📁 Navigating to backend directory..."
-cd /home/ubuntu/backend || { echo "❌ Directory not found!"; exit 1; }
+# Clone or upload backend code
+# Assuming you upload to /home/ubuntu/backend
+#cd /home/ubuntu/backend
 
-echo "📦 Installing Node.js packages..."
+# Install dependencies
 npm install
 
-echo "📦 Installing dotenv and PM2 globally..."
-npm install dotenv
+# (Optional) Load environment variables from .env
+# Make sure your .env file includes correct RDS credentials
+
+# Example .env (store this securely, do not commit)
+# DB_HOST=<your RDS endpoint>
+# DB_USER=admin
+# DB_PASSWORD=your_password
+# DB_NAME=ushasree
+
+# Run the backend
+# node server.js
+
+# Install pm2 to keep it running
 sudo npm install -g pm2
-
-# Optional check for .env file
-if [ ! -f .env ]; then
-    echo "⚠️  .env file not found in backend directory. Please upload it!"
-    exit 1
-fi
-
-# Check if dotenv variables are defined
-MISSING_VARS=()
-for var in DB_HOST DB_USER DB_PASSWORD DB_NAME; do
-    if ! grep -q "^${var}=" .env; then
-        MISSING_VARS+=("$var")
-    fi
-done
-
-if [ ${#MISSING_VARS[@]} -ne 0 ]; then
-    echo "❌ Missing the following environment variables in .env:"
-    for var in "${MISSING_VARS[@]}"; do
-        echo "   - $var"
-    done
-    exit 1
-fi
-
-echo "🚀 Starting backend with PM2..."
-pm2 start server.js --name ushasree-backend
-
-echo "💾 Saving PM2 startup state..."
+pm2 start server.js
+pm2 startup
 pm2 save
-pm2 startup | sudo tee /tmp/pm2_startup.sh > /dev/null
-sudo bash /tmp/pm2_startup.sh
 
-echo "✅ Backend setup complete and running in background."
+echo "Backend is now running on port 3000"
