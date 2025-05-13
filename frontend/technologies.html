@@ -1,10 +1,13 @@
 
 <script>
+  // Check if the user is logged in by checking the localStorage
   if (localStorage.getItem("isLoggedIn") !== "true") {
+    // If not logged in, alert the user and redirect them to the login page
     alert("Please log in to access this page.");
-    window.location.href = "index.html";
+    window.location.href = "index.html"; // Redirect to the login page (index.html)
   }
 </script>
+
 
 <!DOCTYPE html>
 <html lang="en">
