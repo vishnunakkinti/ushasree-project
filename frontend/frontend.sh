@@ -4,11 +4,11 @@ echo "📦 Updating system and installing Nginx..."
 sudo apt update -y
 sudo apt install -y nginx
 
-echo "📁 Creating frontend directory if not exists..."
-mkdir -p /var/www/frontend
+#echo "📁 Creating frontend directory if not exists..."
+#mkdir -p /var/www/frontend
 
 echo "📁 Copying website files to /var/www/frontend..."
-sudo cp -r /home/ubuntu/frontend/* /var/www/frontend/
+sudo cp -r /home/ubuntu/ushasree-project/frontend/* /var/www/frontend/
 
 echo "⚙️ Setting permissions..."
 sudo chown -R www-data:www-data /var/www/frontend
