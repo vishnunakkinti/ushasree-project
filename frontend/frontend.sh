@@ -8,7 +8,7 @@ sudo apt install -y nginx
 #mkdir -p /var/www/frontend
 
 echo "📁 Copying website files to /var/www/frontend..."
-sudo cp -r /home/ubuntu/ushasree/frontend/* /var/www/html/
+sudo cp -r /home/ubuntu/ushasree-project/frontend/* /var/www/html/
 
 
 echo "🛠️ Configuring Nginx for frontend..."
@@ -32,7 +32,7 @@ server {
 EOF
 
 # Enable the new site
-sudo ln -s /etc/nginx/sites-available/frontend /etc/nginx/sites-enabled/frontend
+#sudo ln -s /etc/nginx/sites-available/frontend /etc/nginx/sites-enabled/frontend
 
 echo "🔄 Restarting Nginx..."
 sudo systemctl restart nginx
