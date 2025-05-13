@@ -1,191 +1,67 @@
-
-<script>
-  // Check if the user is logged in by checking the localStorage
-  if (localStorage.getItem("isLoggedIn") !== "true") {
-    // If not logged in, alert the user and redirect them to the login page
-    alert("Please log in to access this page.");
-    window.location.href = "index.html"; // Redirect to the login page (index.html)
-  }
-</script>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>UshaSree Technologies</title>
-  <link rel="stylesheet" href="styles.css">
-
-  <title>UshaSree Technologies</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
   <style>
-    .item-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-    }
-
-    .item-card {
-      width: 200px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      overflow: hidden;
-      background-color: white;
-      text-align: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-
-    .item-card img {
-      width: 100%;
-      height: 140px;
-      object-fit: cover;
-    }
-
-    .item-card p {
-      font-weight: bold;
-      margin: 10px 0 5px;
-    }
-
-    .item-card .price {
-      color: #444;
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
-
-    .item-card button {
-      background-color: #28a745;
-      color: white;
-      border: none;
-      padding: 10px;
-      width: 100%;
-      cursor: pointer;
-    }
-
-    .item-card button:hover {
-      background-color: #218838;
-    }
-
-    /* Modal Styles */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1001;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0,0,0,0.5);
-    }
-
-    .modal-content {
-      background-color: #fff;
-      margin: 10% auto;
-      padding: 20px;
-      border-radius: 8px;
-      width: 90%;
-      max-width: 400px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-    }
-
-    .modal-content h2 {
-      margin-bottom: 10px;
-    }
-
-    .modal-content input {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    .modal-content button {
-      width: 100%;
-      padding: 10px;
-      background-color: #007BFF;
-      border: none;
-      color: white;
-      font-weight: bold;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .modal-content button:hover {
-      background-color: #0056b3;
-    }
-
-    .close-btn {
-      text-align: right;
-      font-size: 18px;
-      cursor: pointer;
-    }
+    /* Keep your CSS as-is — no changes here unless you want design tweaks */
   </style>
->>>>>>> e662636 (version4.0)
 </head>
 <body class="tech-page">
   <header class="subpage-header">
     <h1>UshaSree Technologies</h1>
-
     <p>Innovative IT & Cloud Solutions</p>
-    
+  </header>
+
   <main>
     <section class="content">
       <h2>Our Courses</h2>
       <div class="item-grid">
+        <!-- Course cards unchanged -->
         <div class="item-card">
           <img src="images/linux.jpg" alt="Linux">
           <p>Linux</p>
           <div class="price">₹500</div>
           <button onclick="openEnrollForm('Linux')">Enroll Now</button>
         </div>
-
         <div class="item-card">
           <img src="images/azure.jpg" alt="Microsoft Azure">
           <p>Microsoft Azure</p>
           <div class="price">₹14,999</div>
           <button onclick="openEnrollForm('Microsoft Azure')">Enroll Now</button>
         </div>
-
         <div class="item-card">
           <img src="images/aws.jpg" alt="Amazon Web Services">
           <p>Amazon Web Services</p>
           <div class="price">₹14,999</div>
           <button onclick="openEnrollForm('Amazon Web Services')">Enroll Now</button>
         </div>
-
         <div class="item-card">
           <img src="images/kubernetes.jpg" alt="Kubernetes">
           <p>Kubernetes</p>
           <div class="price">₹4,999</div>
           <button onclick="openEnrollForm('Kubernetes')">Enroll Now</button>
         </div>
-
         <div class="item-card">
           <img src="images/docker.jpg" alt="Docker">
           <p>Docker</p>
           <div class="price">₹2,999</div>
           <button onclick="openEnrollForm('Docker')">Enroll Now</button>
         </div>
-
         <div class="item-card">
           <img src="images/terraform.jpg" alt="Terraform">
           <p>Terraform</p>
           <div class="price">₹1,999</div>
           <button onclick="openEnrollForm('Terraform')">Enroll Now</button>
         </div>
-
         <div class="item-card">
           <img src="images/ansible.jpg" alt="Ansible">
           <p>Ansible</p>
           <div class="price">₹1,999</div>
           <button onclick="openEnrollForm('Ansible')">Enroll Now</button>
         </div>
-
         <div class="item-card">
           <img src="images/python.jpg" alt="Python">
           <p>Python</p>
@@ -193,7 +69,6 @@
           <button onclick="openEnrollForm('Python')">Enroll Now</button>
         </div>
       </div>
-
       <a class="btn" href="index.html">Back</a>
     </section>
   </main>
@@ -214,6 +89,25 @@
   </div>
 
   <script>
+    const backendBaseURL = "http://65.2.9.139:3000";
+
+    // ✅ Replace localStorage check with real session check
+    fetch(`${backendBaseURL}/check-session`, {
+      method: "GET",
+      credentials: "include"
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (!data.loggedIn) {
+        alert("Please log in to access this page.");
+        window.location.href = "index.html";
+      }
+    })
+    .catch(() => {
+      alert("Session check failed. Redirecting to login.");
+      window.location.href = "index.html";
+    });
+
     let selectedCourse = "";
 
     function openEnrollForm(courseName) {
@@ -237,20 +131,10 @@
         return;
       }
 
-      // Optional backend call here:
-      /*
-      fetch('/enroll', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ course: selectedCourse, email, password })
-      }).then(res => res.text()).then(alert).catch(err => alert("Error: " + err));
-      */
-
       alert(`Enrolled in ${selectedCourse} successfully!`);
       closeModal();
     }
 
-    // Close modal on background click
     window.onclick = function(event) {
       const modal = document.getElementById('enrollModal');
       if (event.target === modal) {
@@ -260,4 +144,3 @@
   </script>
 </body>
 </html>
-

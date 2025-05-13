@@ -5,6 +5,8 @@
 # Install Node.js and npm
 sudo apt update -y
 sudo apt install nodejs npm -y
+npm install express express-session mysql2 
+
 
 # Clone or upload backend code
 # Assuming you upload to /home/ubuntu/backend
