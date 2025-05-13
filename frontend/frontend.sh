@@ -8,11 +8,8 @@ sudo apt install -y nginx
 #mkdir -p /var/www/frontend
 
 echo "📁 Copying website files to /var/www/frontend..."
-sudo cp -r /home/ubuntu/ushasree-project/frontend/* /var/www/frontend/
+sudo cp -r /home/ubuntu/ushasree-project/frontend/*.html *.css *.js /var/www/html/
 
-echo "⚙️ Setting permissions..."
-sudo chown -R www-data:www-data /var/www/frontend
-sudo chmod -R 755 /var/www/frontend
 
 echo "🛠️ Configuring Nginx for frontend..."
 
