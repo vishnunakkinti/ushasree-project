@@ -1,0 +1,121 @@
+
+<script>
+  if (localStorage.getItem("isLoggedIn") !== "true") {
+    alert("Please log in to access this page.");
+    window.location.href = "index.html";
+  }
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Your Cart</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .cart-list li {
+      margin: 10px 0;
+      font-size: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cart-list button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-left: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .cart-list button:hover {
+      background-color: #0056b3;
+    }
+    .cart-list button.delete-btn {
+      background-color: #dc3545;
+    }
+    .cart-list button.delete-btn:hover {
+      background-color: #c82333;
+    }
+  </style>
+</head>
+<body>
+  <header class="subpage-header">
+    <h1>Your Cart</h1>
+  </header>
+
+  <main>
+    <section class="content">
+      <ul id="cart-items" class="cart-list"></ul>
+      <button onclick="clearCart()">Clear Cart</button>
+      <a class="btn" href="checkout.html">Proceed to Checkout</a>
+      <a class="back-btn" href="index.html">Back to Home</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; UshaSree Industries. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem('ushasreeCart')) || [];
+    const list = document.getElementById('cart-items');
+
+    function renderCart() {
+      list.innerHTML = '';
+      if (cart.length === 0) {
+        list.innerHTML = '<li>Your cart is empty.</li>';
+      } else {
+        cart.forEach((item, index) => {
+          const li = document.createElement('li');
+          li.innerHTML = `
+            <span>${item.name} x${item.quantity}</span>
+            <div>
+              <button onclick="decreaseQuantity(${index})">−</button>
+              <button onclick="increaseQuantity(${index})">+</button>
+              <button class="delete-btn" onclick="removeItem(${index})" title="Delete">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+          `;
+          list.appendChild(li);
+        });
+      }
+    }
+
+    function decreaseQuantity(index) {
+      if (cart[index].quantity > 1) {
+        cart[index].quantity -= 1;
+      } else {
+        cart.splice(index, 1);
+      }
+      updateCart();
+    }
+
+    function increaseQuantity(index) {
+      cart[index].quantity += 1;
+      updateCart();
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
+
+    function clearCart() {
+      cart = [];
+      updateCart();
+    }
+
+    function updateCart() {
+      localStorage.setItem('ushasreeCart', JSON.stringify(cart));
+      renderCart();
+    }
+
+    renderCart();
+  </script>
+</body>
+</html>

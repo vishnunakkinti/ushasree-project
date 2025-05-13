@@ -1,0 +1,259 @@
+/* ==========================================================================
+   GENERAL RESET & BASE STYLES
+   ========================================================================== */
+   * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    /* Default background for the homepage */
+    background: url('images/UshasreeTech&Foods.png') no-repeat center center fixed;
+    background-size: 1500px 1000px;
+  }
+  
+  /* ==========================================================================
+     HOMEPAGE STYLES (INDEX.HTML)
+     ========================================================================== */
+  
+  /* Hero Header on Homepage */
+  header.hero {
+    text-align: center;
+    padding: 150px 20px 50px;  /* Top padding creates space for the title */
+    color: #fff;
+  }
+  
+  .header-content h1 {
+    font-size: 3rem;
+    white-space: nowrap;      /* Prevent the title from wrapping into multiple lines */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+  }
+  
+  /* ==========================================================================
+     SERVICES SECTION (Common to Homepage)
+     ========================================================================== */
+  main {
+    padding: 50px 20px;
+  }
+  
+  .services {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 50px;
+  }
+  
+  /* Service Card Styles */
+  .service-card {
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent white for readability */
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    max-width: 300px;
+    overflow: hidden;
+    text-align: center;
+    transition: transform 0.3s;
+  }
+  
+  .service-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+  
+  .service-card h2 {
+    margin: 15px 0;
+    font-size: 1.5rem;
+  }
+  
+  .service-card p {
+    padding: 0 15px 15px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+  
+  .btn {
+    display: inline-block;
+    background: #007BFF;
+    color: #fff;
+    padding: 10px 20px;
+    margin-bottom: 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background 0.3s;
+  }
+  
+  .btn:hover {
+    background: #0056b3;
+  }
+  
+  .service-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  /* ==========================================================================
+     SUBPAGE STYLES (Technologies & Foods Pages)
+     ========================================================================== */
+  
+  /* For UshaSree Technologies page - add class "tech-page" to <body> */
+  .tech-page {
+    background: url('images/UshaSreeTech.png') no-repeat center center fixed;
+    background-size: cover;
+  }
+  
+  /* For UshaSree Foods page - add class "foods-page" to <body> */
+  .foods-page {
+    background: url('images/UshaSreeFoods.png') no-repeat center center fixed;
+    background-size: cover;
+  }
+  
+  /* Shared Subpage Header Styles */
+  .subpage-header {
+    text-align: center;
+    padding: 80px 20px;
+    color: #140b0b;
+    /* Optional overlay color for better text readability 
+    background: rgba(229, 234, 239, 0.8);*/
+  }
+  
+  .subpage-header h1 {
+    font-size: 2.5rem;
+  }
+  
+  .subpage-header p {
+    font-size: 1.2rem;
+  }
+  
+  /* ==========================================================================
+     SUBPAGE CONTENT SECTION
+     ========================================================================== */
+  .content {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    margin: 40px auto;
+    max-width: 800px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  .content h2 {
+    margin-bottom: 15px;
+    font-size: 2rem;
+  }
+  
+  .content p {
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  
+  .content ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    margin-bottom: 20px;
+  }
+  
+  /* ==========================================================================
+     FOOTER STYLES
+     ========================================================================== */
+  footer {
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    margin-top: 50px;
+  }
+
+  /* For UshaSree Technologies page */
+.tech-page {
+    background: url('images/tech.jpg') no-repeat center center fixed;
+    background-size: cover;
+  }
+  
+  /* For UshaSree Foods page */
+  .foods-page {
+    background: url('images/food.jpg') no-repeat center center fixed;
+    background-size: cover;
+  }
+
+  /* Back Button Styling */
+.back-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 15px;
+    background: #007BFF;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background 0.3s;
+  }
+  
+  .cart-list button {
+    margin-left: 5px;
+    padding: 4px 8px;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  .back-btn:hover {
+    background: #0056b3;
+  }
+  .auth-background {
+    background-image: url('images/UshasreeTech&Foods.png');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.auth-container {
+    background-color: rgba(255, 255, 255, 0.95);
+    max-width: 400px;
+    margin: auto;
+    padding: 30px;
+    margin-top: 10vh;
+    border-radius: 10px;
+    box-shadow: 0 0 10px #00000044;
+}
+
+.auth-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.auth-container input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+}
+
+.auth-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #005baa;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.auth-container button:hover {
+    background-color: #004080;
+}
+
+.response-message {
+    margin-top: 15px;
+    text-align: center;
+    font-weight: bold;
+    color: green;
+}
+
+.auth-switch {
+    text-align: center;
+    margin-top: 15px;
+}

@@ -1,0 +1,137 @@
+
+<script>
+  if (localStorage.getItem("isLoggedIn") !== "true") {
+    alert("Please log in to access this page.");
+    window.location.href = "index.html";
+  }
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UshaSree Foods</title>
+  <link rel="stylesheet" href="styles.css">
+
+  <title>UshaSree Foods</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="cart.js" defer></script>
+  <style>
+    .item-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .item-card {
+      width: 200px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      overflow: hidden;
+      background-color: white;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .item-card img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+    }
+    .item-card p {
+      font-weight: bold;
+      margin: 10px 0 5px;
+    }
+    .item-card .price {
+      color: #444;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    .item-card button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      cursor: pointer;
+    }
+    .item-card button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+
+</head>
+<body class="foods-page">
+  <header class="subpage-header">
+    <h1>UshaSree Foods</h1>
+    <p>Artistic Culinary Creations</p>
+
+    
+  </header>
+  
+
+  </header>
+
+  <main>
+    <section class="content">
+      <h2>Our Food Menu</h2>
+      <div class="item-grid">
+        <div class="item-card">
+          <img src="images/southindian.jpg" alt="South Indian Meals">
+          <p>South Indian Meals</p>
+          <div class="price">₹120</div>
+          <button onclick="addToCart('South Indian Meals', 120, 'images/southindian.jpg')">Add to Cart</button>
+        </div>
+        <div class="item-card">
+          <img src="images/northindian.jpg" alt="North Indian Meals">
+          <p>North Indian Meals</p>
+          <div class="price">₹150</div>
+          <button onclick="addToCart('North Indian Meals', 150, 'images/northindian.jpg')">Add to Cart</button>
+        </div>
+        <div class="item-card">
+          <img src="images/idly.jpg" alt="Idly">
+          <p>Idly</p>
+          <div class="price">₹30</div>
+          <button onclick="addToCart('Idly', 30, 'images/idly.jpg')">Add to Cart</button>
+        </div>
+        <div class="item-card">
+          <img src="images/dosa.jpg" alt="Dosa">
+          <p>Dosa</p>
+          <div class="price">₹40</div>
+          <button onclick="addToCart('Dosa', 40, 'images/dosa.jpg')">Add to Cart</button>
+        </div>
+        <div class="item-card">
+          <img src="images/millets.jpg" alt="Millet Biryani">
+          <p>Millet Biryani</p>
+          <div class="price">₹140</div>
+          <button onclick="addToCart('Millet Biryani', 140, 'images/millets.jpg')">Add to Cart</button>
+        </div>
+        <div class="item-card">
+          <img src="images/paneer.jpg" alt="Paneer Curry">
+          <p>Paneer Curry</p>
+          <div class="price">₹110</div>
+          <button onclick="addToCart('Paneer Curry', 110, 'images/paneer.jpg')">Add to Cart</button>
+        </div>
+        <div class="item-card">
+          <img src="images/tandooriroti.jpg" alt="Tandoori Roti">
+          <p>Tandoori Roti</p>
+          <div class="price">₹20</div>
+          <button onclick="addToCart('Tandoori Roti', 20, 'images/tandooriroti.jpg')">Add to Cart</button>
+        </div>
+      </div>
+
+      <a class="btn" href="cart.html">🛒 View Cart</a><br>
+      <a href="index.html" class="back-btn">Back</a>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; UshaSree Industries. All Rights Reserved.</p>
+  </footer>
+</body>
+
+</html>
+=======
+</html>
+

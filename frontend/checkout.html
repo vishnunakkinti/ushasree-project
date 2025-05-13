@@ -1,0 +1,157 @@
+
+<script>
+  if (localStorage.getItem("isLoggedIn") !== "true") {
+    alert("Please log in to access this page.");
+    window.location.href = "index.html";
+  }
+</script>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Checkout - UshaSree Foods</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 400px;
+      margin: auto;
+    }
+    label {
+      font-weight: bold;
+    }
+    input, textarea {
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    .order-summary {
+      background: #f9f9f9;
+      padding: 15px;
+      margin: 20px auto;
+      max-width: 400px;
+      border-radius: 8px;
+    }
+    .error {
+      color: red;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <header class="subpage-header">
+    <h1>Checkout - Food Delivery</h1>
+  </header>
+
+  <main>
+    <section class="content">
+      <div class="order-summary">
+        <h3>Order Summary</h3>
+        <ul id="order-items"></ul>
+      </div>
+
+      <form id="checkoutForm" onsubmit="placeOrder(event)">
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+
+        <label for="mobile">Mobile Number:</label>
+        <input type="text" id="mobile" pattern="\d{10}" maxlength="10" required>
+        <span id="mobileError" class="error"></span>
+
+        <label for="address">Delivery Address:</label>
+        <textarea id="address" rows="3" required></textarea>
+
+        <button type="submit">Place Order</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; UshaSree Industries. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    const cart = JSON.parse(localStorage.getItem('ushasreeCart')) || [];
+    const orderList = document.getElementById('order-items');
+
+    const foodItems = cart.filter(item =>
+      ['South Indian Meals', 'North Indian Meals', 'Idly', 'Dosa', 'Millet Biryani', 'Paneer Curry'].includes(item.name)
+    );
+
+    if (foodItems.length === 0) {
+      orderList.innerHTML = '<li>No food items in cart.</li>';
+    } else {
+      foodItems.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.name} x${item.quantity}`;
+        orderList.appendChild(li);
+      });
+    }
+
+    function validateEmail(email) {
+      return /^[^\\s@]+@[^\\s@]+\\.(com|in|org|xyz)$/.test(email);
+    }
+
+    function validateMobile(mobile) {
+      return /^\\d{10}$/.test(mobile);
+    }
+
+    function placeOrder(event) {
+      event.preventDefault();
+
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const mobile = document.getElementById('mobile').value.trim();
+      const address = document.getElementById('address').value.trim();
+      const mobileError = document.getElementById('mobileError');
+
+      if (!validateMobile(mobile)) {
+        mobileError.textContent = 'Enter a valid 10-digit number (without +91).';
+        return;
+      } else {
+        mobileError.textContent = '';
+      }
+
+      if (!validateEmail(email)) {
+        showToast('❌ Please enter a valid email ending with .com/.in/.org/.xyz');
+        return;
+      }
+
+      alert(`Thank you, ${name}! Your food order has been placed.\nDetails sent to ${email}.`);
+      localStorage.removeItem('ushasreeCart');
+      window.location.href = 'index.html';
+    }
+
+    function showToast(message) {
+      const toast = document.createElement('div');
+      toast.textContent = message;
+      toast.style.position = 'fixed';
+      toast.style.bottom = '20px';
+      toast.style.left = '50%';
+      toast.style.transform = 'translateX(-50%)';
+      toast.style.backgroundColor = '#dc3545';
+      toast.style.color = '#fff';
+      toast.style.padding = '10px 20px';
+      toast.style.borderRadius = '8px';
+      toast.style.fontSize = '14px';
+      toast.style.zIndex = '1000';
+      toast.style.opacity = '0';
+      toast.style.transition = 'opacity 0.3s ease';
+
+      document.body.appendChild(toast);
+      setTimeout(() => { toast.style.opacity = '1'; }, 100);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => document.body.removeChild(toast), 300);
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
