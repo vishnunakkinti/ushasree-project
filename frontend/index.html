@@ -6,7 +6,7 @@
   <title>UshaSree Industries</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
-    /* ... Existing styles from original index.html ... */
+    /* Existing styles for the page */
     .auth-buttons {
       position: absolute;
       top: 20px;
@@ -161,6 +161,7 @@
     function openModal(id) {
       document.getElementById(id).style.display = "block";
     }
+
     function closeModal(id) {
       document.getElementById(id).style.display = "none";
     }
@@ -173,8 +174,8 @@
     };
 
     window.onload = function () {
-      const isLoggedIn = localStorage.getItem("loggedIn") === "true";
-      if (isLoggedIn) {
+      const token = localStorage.getItem("jwt");
+      if (token) {
         document.querySelectorAll(".protected-link").forEach(link => {
           link.style.display = "inline-block";
         });
@@ -184,7 +185,7 @@
     };
 
     function logout() {
-      localStorage.removeItem("loggedIn");
+      localStorage.removeItem("jwt");
       location.reload();
     }
 
@@ -201,8 +202,9 @@
         });
 
         if (!response.ok) throw new Error("Login failed");
+        const data = await response.json();
         document.getElementById("loginMessage").textContent = "✅ Login Successful!";
-        localStorage.setItem("loggedIn", "true");
+        localStorage.setItem("jwt", data.token);
         setTimeout(() => location.reload(), 1000);
       } catch (err) {
         document.getElementById("loginMessage").textContent = "❌ Invalid Credentials";

@@ -4,6 +4,7 @@ const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const bcrypt = require('bcryptjs'); // Add bcrypt for password hashing
 require('dotenv').config();
 
 const app = express();
@@ -37,13 +38,13 @@ db.connect((err) => {
 const sessionStore = new MySQLStore(dbConfig);
 app.use(session({
     key: 'user_session',
-    secret: 'your_secret_key_here',
+    secret: process.env.SESSION_SECRET || 'abcd123', // Use environment variable for secret key
     store: sessionStore,
     resave: false,
     saveUninitialized: false,
     cookie: {
         maxAge: 1000 * 60 * 60 * 24, // 1 day
-        secure: false, // Set to true if using HTTPS
+        secure: process.env.NODE_ENV === 'production', // Use true if using HTTPS
         httpOnly: true
     }
 }));
@@ -53,44 +54,66 @@ app.get('/', (req, res) => {
     res.send('✅ UshaSree Backend is Running');
 });
 
-// Signup Route
+// Signup Route (Password Hashing)
 app.post('/signup', (req, res) => {
     const { username, email, password } = req.body;
     if (!username || !email || !password) {
         return res.status(400).send('⚠️ All fields are required');
     }
 
-    const sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
-    db.query(sql, [username, email, password], (err, result) => {
+    // Hash the password before saving
+    bcrypt.hash(password, 10, (err, hashedPassword) => {
         if (err) {
-            console.error('❌ Signup DB Error:', err.message);
-            return res.status(500).send('❌ Signup failed: ' + err.message);
+            console.error('❌ Hashing Error:', err.message);
+            return res.status(500).send('❌ Error during password hashing');
         }
-        res.send('🎉 User Registered Successfully');
+
+        const sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+        db.query(sql, [username, email, hashedPassword], (err, result) => {
+            if (err) {
+                console.error('❌ Signup DB Error:', err.message);
+                return res.status(500).send('❌ Signup failed: ' + err.message);
+            }
+            res.send('🎉 User Registered Successfully');
+        });
     });
 });
 
-// Login Route
+// Login Route (Password Verification)
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
     if (!username || !password) {
         return res.status(400).send('⚠️ Both username and password are required');
     }
 
-    const sql = "SELECT * FROM users WHERE username = ? AND password = ?";
-    db.query(sql, [username, password], (err, results) => {
+    const sql = "SELECT * FROM users WHERE username = ?";
+    db.query(sql, [username], (err, results) => {
         if (err) {
             console.error('❌ Login DB Error:', err.message);
             return res.status(500).send('❌ Login failed');
         }
 
         if (results.length > 0) {
-            req.session.user = {
-                id: results[0].id,
-                username: results[0].username
-            };
-            console.log("✅ Login Successful:", req.session.user);
-            res.send('✅ Login Successful');
+            const user = results[0];
+
+            // Compare the entered password with the hashed password in the DB
+            bcrypt.compare(password, user.password, (err, isMatch) => {
+                if (err) {
+                    console.error('❌ Password Comparison Error:', err.message);
+                    return res.status(500).send('❌ Error during password comparison');
+                }
+
+                if (isMatch) {
+                    req.session.user = {
+                        id: user.id,
+                        username: user.username
+                    };
+                    console.log("✅ Login Successful:", req.session.user);
+                    res.send('✅ Login Successful');
+                } else {
+                    res.status(401).send('❌ Invalid Credentials');
+                }
+            });
         } else {
             res.status(401).send('❌ Invalid Credentials');
         }

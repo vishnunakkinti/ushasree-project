@@ -1,23 +1,8 @@
-
-<script>
-  // Check if the user is logged in by checking the localStorage
-  if (localStorage.getItem("isLoggedIn") !== "true") {
-    // If not logged in, alert the user and redirect them to the login page
-    alert("Please log in to access this page.");
-    window.location.href = "index.html"; // Redirect to the login page (index.html)
-  }
-</script>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>UshaSree Foods</title>
-  <link rel="stylesheet" href="styles.css">
-
   <title>UshaSree Foods</title>
   <link rel="stylesheet" href="styles.css">
   <script src="cart.js" defer></script>
@@ -63,17 +48,11 @@
       background-color: #0056b3;
     }
   </style>
-
 </head>
 <body class="foods-page">
   <header class="subpage-header">
     <h1>UshaSree Foods</h1>
     <p>Artistic Culinary Creations</p>
-
-    
-  </header>
-  
-
   </header>
 
   <main>
@@ -132,9 +111,40 @@
   <footer>
     <p>&copy; UshaSree Industries. All Rights Reserved.</p>
   </footer>
+
+  <script>
+    // Fetch the JWT token from localStorage
+    const token = localStorage.getItem("authToken");
+
+    if (!token) {
+      alert("Please log in to access this page.");
+      window.location.href = "index.html"; // Redirect to the login page (index.html)
+    } else {
+      // Verify the token with the backend
+      fetch("http://65.2.143.39:3000/verify-token", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}` // Send JWT token in Authorization header
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (!data.valid) {
+            alert("Session expired or invalid. Please log in again.");
+            window.location.href = "index.html";
+          }
+        })
+        .catch((err) => {
+          alert("Session check failed. Redirecting to login.");
+          window.location.href = "index.html";
+        });
+    }
+
+    function addToCart(itemName, itemPrice, itemImage) {
+      // Code to add the item to the cart (you can add more functionality here)
+      console.log(`Item Added: ${itemName}, Price: ₹${itemPrice}`);
+    }
+  </script>
 </body>
-
 </html>
-=======
-</html>
-
